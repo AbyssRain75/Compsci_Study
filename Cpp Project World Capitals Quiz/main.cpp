@@ -33,8 +33,11 @@ void saveHighScore(int score) {
     vector<int> scores;
     {
         ifstream in("HighScores.txt");
-        int s;
-        while (in >> s) scores.push_back(s);
+        if (in.is_open()) {
+            int s;
+            while (in >> s) scores.push_back(s);
+        }
+        // If file doesn't exist, scores remains empty (will be created)
     }
 
     // Add current score
@@ -43,10 +46,15 @@ void saveHighScore(int score) {
     // Sort descending
     sort(scores.begin(), scores.end(), greater<int>());
 
-    // Write back
+    // Keep only top 5
+    if (scores.size() > 5) {
+        scores.resize(5);
+    }
+
+    // Write back with sequence numbers
     ofstream out("HighScores.txt", ios::trunc);
-    for (int s : scores) {
-        out << s << '\n';
+    for (int i = 0; i < scores.size(); i++) {
+        out << (i + 1) << ". " << scores[i] << '\n';
     }
 }
 
