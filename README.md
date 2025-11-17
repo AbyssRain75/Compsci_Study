@@ -1,2 +1,2 @@
-# Stage-1-Compsci
-University of Auckland Stage Study
+# Compsci Study
+University of Auckland Study and self study
